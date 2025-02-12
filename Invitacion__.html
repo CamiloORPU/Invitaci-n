@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Invitación Especial</title>
+    <style>
+        body {
+            text-align: center;
+            font-family: Arial, sans-serif;
+            background-color: #ffe6e6;
+        }
+        h1 {
+            color: #d63384;
+        }
+        .gif-container img {
+            width: 300px;
+            height: auto;
+        }
+        .buttons {
+            margin-top: 20px;
+        }
+        .btn {
+            padding: 10px 20px;
+            font-size: 20px;
+            margin: 10px;
+            border: none;
+            cursor: pointer;
+            border-radius: 10px;
+        }
+        .btn-si {
+            background-color: #ff69b4;
+            color: white;
+        }
+        .btn-no {
+            background-color: #ff0000;
+            color: white;
+        }
+        .btn-escapista {
+            position: absolute;
+            background-color: #ff4500;
+            color: white;
+        }
+    </style>
+</head>
+<body>
+    <h1 id="message">Hola mi amor, ¿Quieres ser mi 14 de febrero? ❤️</h1>
+    <div class="gif-container">
+        <!-- URL del GIF inicial (limpiada) -->
+        <img id="gif" src="https://media.giphy.com/media/tpVKvAabWt3G5csMkT/giphy.gif" alt="Amor">
+    </div>
+    <div class="buttons">
+        <button class="btn btn-si" onclick="aceptar()">Sí</button>
+        <button class="btn btn-no" onclick="cambiarOpciones()" id="no-btn">No</button>
+    </div>
+    <script>
+        let nivel = 0;
+        
+        // Lista de GIFs que aparecen al hacer clic en "No" (limpiados)
+        let gifsDeAmor = [
+            "https://media.giphy.com/media/Z21HJj2kz9uBG/giphy.gif", // GIF 1
+            "https://media.giphy.com/media/fvjBHSTYMcE1fKcrP9/giphy.gif", // GIF 2
+            "https://media.giphy.com/media/l2R0cE5EqO3QHiCoU/giphy.gif"  // GIF 3
+        ];
+        
+        function aceptar() {
+            // Mensaje cuando acepta
+            document.getElementById("message").innerHTML = "Sabía que ibas a aceptar Tefita, tienes una cena para este viernes en la noche ❤️";
+            
+            // URL del GIF cuando acepta
+            document.getElementById("gif").src = "https://media.giphy.com/media/F9hQLAVhWnL56/giphy.gif";
+            
+            // Elimina los botones después de aceptar
+            document.querySelector(".buttons").remove();
+        }
+        
+        function cambiarOpciones() {
+            let noBtn = document.getElementById("no-btn");
+            let siBtn = document.querySelector(".btn-si");
+            
+            // Cambia el GIF cada vez que se presiona "No"
+            document.getElementById("gif").src = gifsDeAmor[nivel % gifsDeAmor.length];
+            
+            if (nivel === 0) {
+                siBtn.style.fontSize = "25px";
+                noBtn.textContent = "¿Estás segura?";
+            } else if (nivel === 1) {
+                siBtn.style.fontSize = "30px";
+                noBtn.textContent = "Vamos, di que sí :c";
+            } else {
+                noBtn.remove();
+                let buttonsDiv = document.querySelector(".buttons");
+                let escapistaBtn = document.createElement("button");
+                escapistaBtn.textContent = "No vas a poder decirme que no jeje";
+                escapistaBtn.classList.add("btn", "btn-escapista");
+                escapistaBtn.id = "escapista-btn";
+                buttonsDiv.appendChild(escapistaBtn);
+                moverBoton();
+            }
+            nivel++;
+        }
+        
+        function moverBoton() {
+            let escapistaBtn = document.getElementById("escapista-btn");
+            escapistaBtn.onmouseover = function() {
+                let x = Math.random() * (window.innerWidth - escapistaBtn.clientWidth);
+                let y = Math.random() * (window.innerHeight - escapistaBtn.clientHeight);
+                escapistaBtn.style.left = `${x}px`;
+                escapistaBtn.style.top = `${y}px`;
+            };
+        }
+    </script>
+</body>
+</html>
